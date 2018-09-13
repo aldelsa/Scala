@@ -4,7 +4,7 @@ object exercises01{
     //println(sum(10))
     //println(factorial(5))
     //println(digits(5634))
-    println(sumDigits(56))
+    println(sumDigits(55).toInt)
 
   }
 
@@ -30,10 +30,10 @@ object exercises01{
   }
 
   ///////////////////////////////////////////
-  def sumDigits(num: Integer) : Integer = {
+  def sumDigits(num: Integer ) : Integer = {
     def sumDigits_2(num: Integer, accu: Integer) : Integer = {
       if (num <= 0 ) accu
-      else sumDigits_2(num / 10, accu + num/10)
+      else sumDigits_2(num / 10, accu + num%10)
     }
     sumDigits_2(num,0)
   }
