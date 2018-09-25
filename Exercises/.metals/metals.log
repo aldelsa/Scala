@@ -1,0 +1,8 @@
+22:59:31.433 INFO  s.meta.metals.Main$ - Starting server in /Users/Alex/SCALA/Exercises
+22:59:31.447 INFO  s.meta.metals.Main$ - Classpath: /Users/Alex/.atom/packages/ide-scala/coursier
+22:59:33.770 INFO  s.m.m.Formatter$ - Classloading scalafmt with 28 downloaded jars
+22:59:34.333 INFO  s.meta.metals.Main$ - Listening....
+22:59:34.410 INFO  s.m.m.MetalsServices - Initialized with /Users/Alex/SCALA/Exercises, InitializeParams(1108,/Users/Alex/SCALA/Exercises/,ClientCapabilities())
+22:59:34.440 INFO  s.m.m.MetalsServices - File /Users/Alex/SCALA/Exercises/project/target/active.json changed
+22:59:34.553 INFO  s.m.m.MetalsServices - Client is initialized
+22:59:34.574 INFO  s.m.m.MetalsServices - Configuration updated Configuration(Sbt(Enabled(true),),Scalac(Enabled(false),Enabled(false)),Scalafmt(true,false,1.4.0,Some(.scalafmt.conf)),Scalafix(true,Some(.scalafix.conf)),Search(true,true),Enabled(true),Enabled(false),Enabled(false))

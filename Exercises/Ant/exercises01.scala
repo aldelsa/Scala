@@ -4,10 +4,13 @@ object exercises01{
     //println(sum(10))
     //println(factorial(5))
     //println(digits(5634))
+<<<<<<< HEAD
     //println(sumDigits(566))
     //println(gcd(10,55))
-    //println(fibonacci(7))
-    println(pascal(3,2))
+    println(fibonacci(7))
+=======
+    println(sumDigits(55).toInt)
+>>>>>>> 9da837991414298fb2b75f22dd18c1f5719f1ea3
 
   }
 
@@ -41,23 +44,10 @@ object exercises01{
     sumDigits_2(num,0)
   }
 
-  def gcd(num1: Integer , num2: Integer) = {
-
-  }
-
   ///////////////////////////////////////////
-
-  def fibonacci(pos: Int) = {
-    def fibonacci_2(n: Int, curr: Int, next: Int): Int = {
-      if (n == 0) curr
-      else fibonacci_2(n-1, next, curr+next)
+  def fibonacci(num: Integer ) : Integer  = {
+      if ( num <= 0 ) 1
+      else fibonacci(num-1) + fibonacci(num-2)
     }
-    fibonacci_2(pos, 0, 1)
-  }
 
-  ///////////////////////////////////////////
-  def pascal (x: Int, y: Int): Int = {
-    if (y == 1 || x == y) 1
-    else pascal( x-1, y-1 ) + pascal ( x-1, y)
-  }
 }
