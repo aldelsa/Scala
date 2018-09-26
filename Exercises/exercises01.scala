@@ -34,14 +34,30 @@ object exercises01{
     //2.11 Largest element
     //println(largest(List(1,2,7,4,5)))
 
-    //2.12 Reverse  ####### NOT ######
+    //2.12 Reverse
     //println(reverse(List(1,2,7,4,5)))
 
     //2.13 Map
     //println(map(List(1, 2, 3, 4, 5), x => x * x))
 
     //2.14 Sorted
-    println(sorted(List(5, 4, 3, 2, 1), (a, b) => a > b))
+    //println(sorted(List(5, 4, 3, 2, 1), (a, b) => a > b))
+
+    //2.15 Concatenation
+    //println(concatenate(List(1,2,3), List(4, 5))
+
+    //2.16 Zip
+    //println(zip(List(1,2,3), List(4,5,6))) ######## REPASS #######
+
+    //2.17 Dot product
+    //println(dot(List(1,2,3,4), List(9,8,7,6)))
+
+    //2.18 Scale  ####### NOT ######
+
+    //2.19 Filter
+    println(filter(List(9, 8, 7, 6, 5, 4), x => x % 3 == 0))
+
+
   }
 
   ///////////////////////////////////////////
@@ -146,10 +162,10 @@ object exercises01{
   ///////////////////////////////////////////
   //2.12 Reverse
   ///////////////////////////////////////////
-  //def reverse(l: List[Int]): List[Int] = {
-    //if (l.isEmpty) Nil
-    //else (reverse(l.tail)) l.head
-  //}
+  def reverse(l: List[Int]): List[Int] = l match {
+    case h :: tail => reverse(tail) ::: List(h)
+    case Nil => Nil
+  }
 
   ///////////////////////////////////////////
   //2.13 Map
@@ -170,6 +186,49 @@ object exercises01{
     }
     sorted_1(l.tail,f,l.head)
   }
+
+  ///////////////////////////////////////////
+  //2.15 Concatenation
+  ///////////////////////////////////////////
+  //def concatenate(l1: List[Int],l2: List[Int]): List[Int] = (l1,l2) match {
+
+  //}
+
+  ///////////////////////////////////////////
+  //2.16 Zip
+  ///////////////////////////////////////////
+  def zip(l1: List[Int], l2: List[Int]): List[(Int,Int)] = (l1,l2) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (x :: l1, y :: l2) => (x, y) :: zip(l1, l2)
+  }
+
+  ///////////////////////////////////////////
+  //2.17 Dot product
+  ///////////////////////////////////////////
+  def dot(l1: List[Int],l2: List[Int]): Int = {
+    if (l1.isEmpty || l2.isEmpty) 0
+    else l1.head * l2.head + dot(l1.tail,l2.tail)
+  }
+  ///////////////////////////////////////////
+  //2.18 Scale
+  ///////////////////////////////////////////
+
+
+
+  ///////////////////////////////////////////
+  //2.19 Filter
+  ///////////////////////////////////////////
+  def filter (l: List[Int], f: Int => Boolean): List[Int] = {
+    if (l.isEmpty) Nil
+    else if (f(l.head)) l.head :: filter(l.tail,f)
+    else filter(l.tail,f)
+  }
+
+
+
+
+
 
 
 }
