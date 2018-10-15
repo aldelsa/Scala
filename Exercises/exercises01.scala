@@ -44,7 +44,7 @@ object exercises01{
     //println(sorted(List(5, 4, 3, 2, 1), (a, b) => a > b))
 
     //2.15 Concatenation
-    //println(concatenate(List(1,2,3), List(4, 5))
+    println(concatenate(List(1,2,3), List(4, 5)))
 
     //2.16 Zip
     //println(zip(List(1,2,3), List(4,5,6))) ######## REPASS #######
@@ -55,8 +55,14 @@ object exercises01{
     //2.18 Scale  ####### NOT ######
 
     //2.19 Filter
-    println(filter(List(9, 8, 7, 6, 5, 4), x => x % 3 == 0))
+    //println(filter(List(9, 8, 7, 6, 5, 4), x => x % 3 == 0))
 
+    //2.20 Reduce
+    //println(reduce(List(1, 8, 4, 3, 9, 5), _ + _))  ####### NOT ######
+
+
+    //2.21 Nth smallest number
+    //println(smallest(List(3, 7, 1, 9, 3, 5, 8),3))
 
   }
 
@@ -190,9 +196,14 @@ object exercises01{
   ///////////////////////////////////////////
   //2.15 Concatenation
   ///////////////////////////////////////////
-  //def concatenate(l1: List[Int],l2: List[Int]): List[Int] = (l1,l2) match {
-
-  //}
+  def concatenate(l1: List[Int],l2: List[Int]): List[Int] = {
+    def concatenate_2(l1: List[Int],l2: List[Int],res: List[Int]): List[Int] = {
+      if (l1.isEmpty && l2.isEmpty) Nil
+      else if (l1.isEmpty) l2.head :: concatenate_2(l1,l2.tail,res) 
+      else l1.head :: concatenate_2(l1.tail,l2,res) 
+    }
+    concatenate_2(l1,l2,Nil)
+  }
 
   ///////////////////////////////////////////
   //2.16 Zip
@@ -225,10 +236,28 @@ object exercises01{
     else filter(l.tail,f)
   }
 
+  ///////////////////////////////////////////
+  //2.20 Reduce
+  ///////////////////////////////////////////
+  //def reduce (l: List[Int], f: (Int, Int) => Int): Int = (l,l) match {
+    //case (Nil, _) => 0
+    //case (_, Nil) => 0
+    //case (x :: l, y :: l) => f(x, y) + reduce(l,f)
+  //}
 
-
-
-
-
+  ///////////////////////////////////////////
+  //2.21 Nth smallest number
+  ///////////////////////////////////////////
+  // def smallest(l: List[Int], num: Int): Int = {
+  //   def smallest_2(l: List[Int], num: Int, count: Int, min: Int): Int = {
+  //     if (l.isEmpty || count == num ) {
+  //       println(num)
+  //       min
+  //     }
+  //     else if (l.head < min) smallest_2(l.tail, num, count + 1, l.head )
+  //     else smallest_2(l.tail, num, count, min )
+  //   }
+  //   smallest_2(l.tail,num,0,l.head)
+  //}
 
 }
