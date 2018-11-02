@@ -44,7 +44,7 @@ object exercises01{
     //println(sorted(List(5, 4, 3, 2, 1), (a, b) => a > b))
 
     //2.15 Concatenation
-    println(concatenate(List(1,2,3), List(4, 5)))
+    //println(concatenate(List(1,2,3), List(4, 5)))
 
     //2.16 Zip
     //println(zip(List(1,2,3), List(4,5,6))) ######## REPASS #######
@@ -58,12 +58,32 @@ object exercises01{
     //println(filter(List(9, 8, 7, 6, 5, 4), x => x % 3 == 0))
 
     //2.20 Reduce
-    //println(reduce(List(1, 8, 4, 3, 9, 5), _ + _))  ####### NOT ######
-
+    //println(reduce(List(1, 8, 4, 3, 9, 5), _ + _))
 
     //2.21 Nth smallest number
-    //println(smallest(List(3, 7, 1, 9, 3, 5, 8),3))
+    //println(smallest(List(3, 7, 1, 9, 3, 5, 8),4))
 
+    //2.22 Balanced
+    //println(balanced(("()(())".toList).toList))
+
+    //2.24 countChange
+    //println(countChange(4,List(1,2))) ##  NOT
+
+    //2.25 Fibonacci list
+    //println(fibonacciList(10))
+
+    //2.27 Stream of natural numbers
+    //println(streamFrom(5).take(8).toList)
+
+    //2.28 Moving average
+    // val s = Stream(3.2, 5.3, 5.6, 4.4, 3.4, 7.5, 6.2, 9.4, 2.3)
+    // println(averages(5,s).take(3).toList)
+
+    //2.29 Leibniz sequence for Pi
+    //println(leibnizStream().take(100).sum * 4)
+
+    //2.30 Fibonacci stream
+    println(fibonacciStream.take(8).toList)
   }
 
   ///////////////////////////////////////////
@@ -239,25 +259,118 @@ object exercises01{
   ///////////////////////////////////////////
   //2.20 Reduce
   ///////////////////////////////////////////
-  //def reduce (l: List[Int], f: (Int, Int) => Int): Int = (l,l) match {
-    //case (Nil, _) => 0
-    //case (_, Nil) => 0
-    //case (x :: l, y :: l) => f(x, y) + reduce(l,f)
-  //}
+  def reduce (l: List[Int], f: (Int, Int) => Int): Int = (l,l) match {
+    case (Nil, _) => 0
+    case (_, Nil) => 0
+    case (x :: t, y :: t2) => f(x, y) + reduce(l.tail,f)
+  }
 
   ///////////////////////////////////////////
   //2.21 Nth smallest number
   ///////////////////////////////////////////
-  // def smallest(l: List[Int], num: Int): Int = {
-  //   def smallest_2(l: List[Int], num: Int, count: Int, min: Int): Int = {
-  //     if (l.isEmpty || count == num ) {
-  //       println(num)
-  //       min
-  //     }
-  //     else if (l.head < min) smallest_2(l.tail, num, count + 1, l.head )
-  //     else smallest_2(l.tail, num, count, min )
-  //   }
-  //   smallest_2(l.tail,num,0,l.head)
-  //}
+  def smallest(l: List[Int], num: Int): Int = {
+    def smallest_2(l: List[Int], min: Int): Int = {
+      if (l.isEmpty) min
+      else if (l.head < min) smallest_2(l.tail, l.head)
+      else smallest_2(l.tail, min)
+    }
+    def removeMin(l: List[Int], min: Int, res: List[Int]): List[Int] = {
+      if (l.isEmpty) res
+      else if (l.head == min) removeMin(l.tail,min,res)
+      else removeMin(l.tail, min, l.head :: res)
+    }
+    def loop( num: Int, index: Int, l1: List[Int], current: Int): Int = {
+      if (index == num ) current
+      else {
+        println(index + " - " + l1 + " - " + smallest_2(l1,50))
+        loop(num, index + 1, removeMin(l1, smallest_2(l1,50), Nil), smallest_2(l1,50))
+        }
+    }
+    loop(num,0,l, 0)
+  }
 
+  ///////////////////////////////////////////
+  //2.22 Balanced
+  ///////////////////////////////////////////
+  def balanced(l: List[Char]): Boolean = {
+    def balanced_2(l: List[Char], count: Int ): Int = {
+          if (l.isEmpty) count
+          else if (l.head == '(' || l.head == ')' ) balanced_2(l.tail, count + 1)
+          else balanced_2(l.tail, count)
+    }
+    (balanced_2(l,0)) % 2 == 0
+  }
+
+  ///////////////////////////////////////////
+  //2.24 countChange
+  ///////////////////////////////////////////
+  // def countChange(amount: Int, l: List[Int]): Int = {
+  //   def countChange_2(amount: Int, l: List[Int]): Int = {
+
+  //   }
+  //   def loop(amount: Int, l: List[Int], res: Int): Int = {
+  //     if (l.isEmpty) res
+  //     else countChange_2()
+  //   }
+  // }
+
+  ///////////////////////////////////////////
+  //2.25 fibonacciList
+  ///////////////////////////////////////////
+  def fibonacciList(amount: Int): List[Int] = {
+    def fibonacciList_2(amount: Int, index: Int, res: List[Int]): List[Int] = {
+      if (index == amount) res
+      else if (index == 1) fibonacciList_2(amount, index + 1, 1 :: res  )
+      else fibonacciList_2(amount, index + 1, res.head + res.tail.head :: res  )
+    }
+    fibonacciList_2(amount, 1, List(1) )
+  }
+
+  // def quickSort(xs: List[Int]): List[Int] = {
+  //   def quickSort(xs: List[Int], res: List[Int]): List[Int] = {
+  //         if (xs.size <= 1) res
+  //         else {
+  //             val pivot = xs.indexOf(xs.length / 2)
+
+  //              Array.concat(
+  //                 quickSort(xs filter (pivot >)), xs filter (pivot ==), quickSort(xs filter (pivot <)))
+  //         }
+  //   }
+  // }
+
+  ///////////////////////////////////////////
+  //2.27 Stream of natural numbers
+  ///////////////////////////////////////////
+  def streamFrom(num: Int): Stream[Int] = {
+    num #:: streamFrom(num + 1)
+  }
+
+  ///////////////////////////////////////////
+  //2.28 Moving average
+  ///////////////////////////////////////////
+  def averages(order: Int, s: Stream[Double]): Stream[Double] = {
+    ((s.take(order).sum) * 1/order) #:: averages(order,s.tail)
+  }
+
+  ///////////////////////////////////////////
+  //2.29 Leibniz sequence for Pi
+  ///////////////////////////////////////////
+  def leibnizStream(): Stream[Double] = {
+    def leibnizStream_2(k: Int): Stream[Double] = {
+     (Math.pow(-1,k)/(2*k+1.0)) #:: leibnizStream_2(k + 1)
+    }
+    leibnizStream_2(0)
+    //printf("The value of DOUBLE is %.2f".format(((Math.pow(-1,2))/5)));
+  }
+
+  ///////////////////////////////////////////
+  //2.30 Fibonacci stream
+  ///////////////////////////////////////////
+
+  def fibonacciStream(): Stream[Int] = {
+    def fibonacciStream_2(s: Stream[Int]): Stream[Int] = {
+      (s.head + s.tail.head) #:: fibonacciStream_2((s.head + s.tail.head) #:: s )
+    }
+    fibonacciStream_2(0 #:: 1 #:: Stream.Empty)
+  }
 }
