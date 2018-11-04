@@ -19,8 +19,17 @@ object exams extends App {
 	def interleave (s1: Stream[Int], s2: Stream[Int]): Stream[Int] = {
 		s1.head #:: s2.head #:: interleave(s1.tail,s2.tail)
 	}
-
 	println("interleave = " + interleave(Stream(1,2,3,4),Stream(10,20,30,40)).take(8).toList)
+
+	/*
+	*	Ejer 4
+	*/
+	def append(l1: List[Int], l2: List[Int]): List[Int] = {
+		if (l1.isEmpty && l2.isEmpty) Nil
+		else if (l1.isEmpty) l2.head :: append(l1,l2.tail)
+		else l1.head :: append(l1.tail,l2)
+	}
+	println("append = " + append(List(1,2,3,4),List(5,6,2,8)))
 
 	/////////////////////
 	// Exam 2016
@@ -78,6 +87,29 @@ object exams extends App {
 	/////////////////////
 
 	/*
+	*	Ejer 1
+	*/
+
+	def euclidean(x: List[Double], y: List[Double]): Double = {
+		def euclidean_2(x: List[Double], y: List[Double], curr: Double): Double = {
+			if (x.isEmpty || y.isEmpty) curr
+			else euclidean_2(x.tail, y.tail, curr + Math.pow(x.head - y.head,2))
+		}
+		Math.sqrt(euclidean_2(x,y,0.0))
+	}
+
+	def euclidean_v2(x: List[Double], y: List[Double]): Double = {
+		Math.sqrt(x.zip(y).map(x => Math.pow(x._1 - x._2,2)).foldLeft(0.0)((a,b) => a + b))
+	}
+
+	val a = List(1.0, 2.0, 3.0, 4.0, 5.0)
+	val b = List(1.0, 2.0, 1.0, 2.0, 5.0)
+
+	println("euclidean = " + euclidean(a,b))
+
+	println("euclidean_v2 = " + euclidean_v2(a,b))
+
+	/*
 	*	Ejer 2
 	*/
 
@@ -92,5 +124,31 @@ object exams extends App {
 	val example = List((2.0,0),(4.5,1),(1.2,1),(3.0,3),(4.4,1),(4.5,0),(1.7,0),(5.3,2),(2.0,3))
 	println("selectedMean : " + selectedMean(example,3))
 
+	/*
+	*	Ejer 3
+	*/
+	def NewtonMethod (n: Double, f: Double => Double, f1: Double => Double): Stream[Double] = {
+		((n) - ((f(n))/(f1(n)))) #:: NewtonMethod(((n+1) - ((f(n+1))/(f1(n+1)))),f,f1)
+	}
+
+	val f: (Double => Double) = (x) => { x*x - 8.0 }
+	val df: (Double => Double) = (x) => { 2*x }
+	println("NewtonMethod = " + NewtonMethod(10,f,df).take(5).toList)
+
+	/*
+	*	Ejer 4
+	*/
+  	def addAll(l: List[List[Int]]): Int = {
+		def addAll_2(l: List[Int], n: Int): Int = {
+			if (l.isEmpty) n
+			else addAll_2(l.tail,n + l.head)
+		}
+		def loop(l: List[List[Int]], sum: Int): Int = {
+			if (l.isEmpty) sum
+			else loop(l.tail, sum + addAll_2(l.head, 0))
+		}
+		loop(l,0)
+  	}
+  	println("addAll = " + addAll(List(List(1,2,3),List(4,5,6))))
 
 }
