@@ -22,8 +22,8 @@ object exercises01{
     //2.7 Pascal triangle
     //println(pascal(3,2))
 
-    //2.8 Currified function  ####### NOT ######
-    //println(currified(3,2))
+    //2.8 Currified function
+    println(currified(5)(3)(4))
 
     //2.9 Sum elements
     //println(sumEle(List(1,2,3,4,5)))
@@ -153,8 +153,12 @@ object exercises01{
   ///////////////////////////////////////////
   //2.8 Currified function
   ///////////////////////////////////////////
-  def currified(num1: Integer , num2: Integer) = {
-
+  val currified : (Int => (Int => (Int => Int))) = (a) => {
+    (b) => {
+      (c) => {
+        a*((b+c)*(b+c))
+      }
+    }
   }
 
   ///////////////////////////////////////////
