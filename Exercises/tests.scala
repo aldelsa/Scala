@@ -41,4 +41,29 @@ object tests extends App {
 
 	val s = Stream(3.2, 5.3, 5.6, 4.4, 3.4, 7.5, 6.2, 9.4, 2.3)
 	println(averages(3, s).take(3).toList)
+
+
+	def stream2Words(s: Stream[Char], separator: Char): Stream[List[Char]] = {
+		def stream2Words_2 (s: Stream[Char], separator: Char, listTemp: List[Char], res: Stream[List[Char]]): Stream[List[Char]] =  {
+			if (s.isEmpty) res
+			else if(s.head != separator) stream2Words_2(s.tail, separator, listTemp :+ s.head , res)
+			else listTemp #:: stream2Words_2(s.tail, separator, Nil, listTemp #:: res)
+		}
+		stream2Words_2(s,separator,Nil, Stream.Empty)
+	}
+
+
+	val result = stream2Words(('H' #:: 'e' #:: 'l' #::'l' #:: 'o' #:: '.' #:: 'I' #:: '.' #:: 'a' #:: 'm' #::'.' #:: 'a' #::'.' #:: 'c' #::'a' #::
+  	't' #:: Stream.empty),'.')
+
+	println("stream2Words = " + result.head)
+
+	val a = List(1.0, 2.0, 3.0, 4.0, 5.0)
+	val b = List(1.0, 2.0, 1.0, 2.0, 5.0)
+
+	println("euclidean = " + euclidean(a,b))
+
+
+
+
 }

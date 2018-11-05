@@ -61,7 +61,7 @@ object exams extends App {
 			else if (l.head == min) loop(l.tail,res,min)
 			else loop(l.tail,l.head :: res,min)
 		}
-		min2(loop(loop(l, Nil,min2(l,l.head)), Nil, min2(loop(l, Nil,min2(l,l.head)),loop(l, Nil,min2(l,l.head)).head)),l.head)
+		min2(loop(l, Nil, min2(l,l.head)),l.head)
 	}
 	println("secondSmallest = " + secondSmallest(List(6,4,5,1,3,2)))
 
@@ -77,8 +77,8 @@ object exams extends App {
 		loop(s,separator,Nil,Stream.Empty)
 	}
 
-	val result = stream2Words(('H' #:: 'e' #:: 'l' #::'l' #:: 'o' #:: '.' #:: 'I' #:: '.' #:: 'a' #:: 'm' #::'.' #:: 'a' #::'.' #:: 'c' #::'a' #::
-  	't' #:: Stream.empty),'.')
+	val result = stream2Words(('H' #:: 'e' #:: 'l' #::'l' #:: 'o' #:: ' ' #:: 'I' #:: ' ' #:: 'a' #:: 'm' #::' ' #:: 'a' #::' ' #:: 'c' #::'a' #::
+  	't' #:: Stream.empty),' ')
 
 	println("stream2Words = " + result.head)
 
