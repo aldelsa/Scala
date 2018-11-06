@@ -1,4 +1,4 @@
-object exercises01{
+object exercises{
   def main(args: Array[String]):Unit = {
 
     //2.1 Sum
@@ -23,7 +23,7 @@ object exercises01{
     //println(pascal(3,2))
 
     //2.8 Currified function
-    println(currified(5)(3)(4))
+    //println(currified(5)(3)(4))
 
     //2.9 Sum elements
     //println(sumEle(List(1,2,3,4,5)))
@@ -61,7 +61,7 @@ object exercises01{
     //println(reduce(List(1, 8, 4, 3, 9, 5), _ + _))
 
     //2.21 Nth smallest number
-    //println(smallest(List(3, 7, 1, 9, 3, 5, 8),4))
+    println(smallest(List(3, 7, 1, 9, 3, 5, 8),4))
 
     //2.22 Balanced
     //println(balanced(("()(())".toList).toList))
@@ -83,7 +83,7 @@ object exercises01{
     //println(leibnizStream().take(100).sum * 4)
 
     //2.30 Fibonacci stream
-    println(fibonacciStream.take(8).toList)
+    //println(fibonacciStream.take(8).toList)
   }
 
   ///////////////////////////////////////////
@@ -286,11 +286,10 @@ object exercises01{
     def loop( num: Int, index: Int, l1: List[Int], current: Int): Int = {
       if (index == num ) current
       else {
-        println(index + " - " + l1 + " - " + smallest_2(l1,50))
-        loop(num, index + 1, removeMin(l1, smallest_2(l1,50), Nil), smallest_2(l1,50))
+        loop(num, index + 1, removeMin(l1, smallest_2(l1,Int.MaxValue), Nil), smallest_2(l1,Int.MaxValue))
         }
     }
-    loop(num,0,l, 0)
+    loop(num,1,l, l.head)
   }
 
   ///////////////////////////////////////////

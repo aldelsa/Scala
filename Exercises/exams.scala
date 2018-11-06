@@ -38,14 +38,24 @@ object exams extends App {
 	/*
 	*	Ejer 1
 	*/
-	def combinations(n: Int): List[Int] = {
-		def loop(n: Int, first: List[Int], temp: List[Int]): List[Int] = {
-			if (temp.size == n) temp
-			else if (first.head == 1) loop(n,first.tail, 0 :: temp)
-			else loop(n,first.tail, 1 :: temp)
+	// author : Christos Garis
+	def combinations(n: Int): List[List[Int]] = {
+		def numToBin(l: List[Int], n: Int): List[Int] = {
+			if ((n == 0) || (n == 1))
+				List(n) ::: l.tail
+			else
+				n % 2 :: numToBin(l.tail, n/2)
 		}
-		loop(n, List.fill(n)(0), Nil)
+		def loop(first: List[Int], n: Int, acum: Int): List[List[Int]] = {
+			if (acum >= Math.pow(2, n))
+				Nil
+			else
+				List(numToBin(first, acum).reverse) ::: loop(List.fill(n)(0), n, acum+1)
+		}
+		loop(List.fill(n)(0), n, 0)
 	}
+
+	println(combinations(3))
 
 	/*
 	*	Ejer 2
@@ -112,7 +122,6 @@ object exams extends App {
 	/*
 	*	Ejer 2
 	*/
-
 	def selectedMean(l: List[(Double,Int)], n: Int): Double = {
 		def selectedMean_2(l: List[(Double,Int)], accu: Double): Double = {
 			if (l.isEmpty) accu
@@ -150,5 +159,92 @@ object exams extends App {
 		loop(l,0)
   	}
   	println("addAll = " + addAll(List(List(1,2,3),List(4,5,6))))
+
+  	//////////////////////////
+	//	4 Jan 2018
+	//////////////////////////
+
+  	/*
+  	* Exercise 1
+	*/
+	def manhattan(x: List[Double], y: List[Double]): Double = {
+		def manhattan_2(x: List[Double], y: List[Double], sum: Double): Double = {
+			if (x.isEmpty && y.isEmpty) sum
+			else manhattan_2( x.tail, y.tail, sum + Math.abs(x.head - y.head))
+		}
+		manhattan_2(x,y,0)
+	}
+
+	val a_m = List(1.0, 2.0, 3.0, 4.0, 5.0)
+	val b_m = List(1.0, 2.0, 1.0, 2.0, 5.0)
+	println("manhattan = " + manhattan(a_m, b_m))
+
+	def manhattan_v2(x: List[Double], y: List[Double]): Double = {
+		x.zip(y).map(x => x._1 - x._2).foldLeft(0.0)((a,b) => a + b)
+	}
+
+	println("manhattan v2 = " + manhattan(a_m, b_m))
+
+  	/*
+  	* Exercise 2
+	*/
+	def allSelected(pos: Int, l: List[(Double,Int)]): Double = {
+		def allSelected_2(l: List[(Double,Int)], sum: Double): Double = {
+			if (l.isEmpty) sum
+			else if (l.head._2 == pos) allSelected_2(l.tail, sum + l.head._1)
+			else allSelected_2(l.tail, sum)
+		}
+		allSelected_2(l,0)
+	}
+	val example_a = List((2.0,0),(4.5,1),(1.2,1),(3.0,3),(4.4,1),(4.5,0),(1.7,0),(5.3,2),(2.0,3))
+	println("allSelected = " + allSelected(3,example_a))
+
+	def addAll(l1: List[(Double,Int)], l2: List[Int]): List[Double] = {
+		def sum_3(l1: List[(Double,Int)], pos: Int, sum: Double): Double = {
+			if (l1.isEmpty) sum
+			else if (l1.head._2 == pos) sum_3(l1.tail, pos, sum + l1.head._1)
+			else sum_3(l1.tail, pos, sum )
+		}
+		def loop(l1: List[(Double,Int)], l2: List[Int], res: List[Double]): List[Double] = {
+			if (l2.isEmpty) res
+			else loop(l1, l2.tail, sum_3(l1,l2.head,0) :: res)
+		}
+		loop(l1,l2,Nil).reverse
+	}
+	println("addAll = " + addAll(example_a,List(0,1,2,3)))
+
+	/*
+  	* Exercise 3
+	*/
+
+	def sinSeq(): Stream[Double] = {
+		def sinSeq_2(i: Int): Stream[Double] = {
+			Math.sin((i+1)/2) #:: sinSeq_2(i + 1)
+		}
+		sinSeq_2(0)
+	}
+	println("sinSeq = " + sinSeq().take(5).toList)
+
+	/*
+  	* Exercise 4
+	*/
+
+	def stream2Words_v2(s: Stream[Char], separator: Char => Boolean): Stream[List[Char]] = {
+		def stream2Words_v2_2(s: Stream[Char], separator: Char => Boolean, tempList: List[Char], res: Stream[List[Char]]): Stream[List[Char]] = {
+			if (s.isEmpty) res
+			else if (!separator(s.head)) stream2Words_v2_2(s.tail, separator, tempList :+ s.head, res)
+			else tempList #:: stream2Words_v2_2(s.tail, separator, Nil, tempList #:: res)
+		}
+		stream2Words_v2_2(s, separator, Nil, Stream.Empty)
+	}
+
+	val separator : Char => Boolean = (c) => { c == ' ' }
+
+	val result_3 = stream2Words_v2(('H' #:: 'e' #:: 'l' #::'l' #:: 'o' #:: ' ' #:: 'I' #:: ' ' #:: 'a' #:: 'm' #::' ' #:: 'a' #::' ' #:: 'c' #::'a' #::
+  	't' #:: Stream.empty),separator)
+
+	println("stream2Words_3 = " + result_3.head)
+
+
 
 }
