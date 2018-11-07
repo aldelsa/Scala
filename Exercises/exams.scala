@@ -14,6 +14,22 @@ object exams extends App {
 	println("from = " + from(3,7))
 
 	/*
+	*	Ejer 2
+	*/
+	val newRow : (List[Int] => List[Int]) = (row) => {
+		lazy val newRowR: (List[Int] => List[Int]) = (row) =>
+		row match {
+			case Nil => List(1)
+			case h :: Nil => 1 :: Nil 
+			case h :: h1 :: t => (h + h1) :: newRowR(t)
+		}
+		1 :: newRowR(row)
+	}
+		
+	println("triangle = " + newRow(List(1,1,1,1,1,1)))
+
+
+	/*
 	*	Ejer 3
 	*/
 	def interleave (s1: Stream[Int], s2: Stream[Int]): Stream[Int] = {
@@ -91,7 +107,17 @@ object exams extends App {
   	't' #:: Stream.empty),' ')
 
 	println("stream2Words = " + result.head)
-
+	/*
+	*	Ejer 4
+	*/
+	def appendIBF(l1: List[Int], l2: List[Int]): List[Int] = {
+		def appendIBF_2(l: List[(Int,Int)]): List[Int] = l match {
+			case Nil => Nil
+			case h :: t => (h._1 :: appendIBF_2(t)) :+ h._2
+		}
+		appendIBF_2(l1.zip(l2.reverse))
+	}
+	println("appendIBF = " + appendIBF(List(1,2,3),List(4,5,6)))
 	/////////////////////
 	// Exam 2017
 	/////////////////////
@@ -99,7 +125,6 @@ object exams extends App {
 	/*
 	*	Ejer 1
 	*/
-
 	def euclidean(x: List[Double], y: List[Double]): Double = {
 		def euclidean_2(x: List[Double], y: List[Double], curr: Double): Double = {
 			if (x.isEmpty || y.isEmpty) curr
